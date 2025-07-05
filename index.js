@@ -22,10 +22,24 @@ app.use(express.static("public"));
 app.use(express.json());
 
 app.use(flash());
+app.use(express.urlencoded({ extended: true }));
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URL, // from MongoDB Atlas or local Mongo
+      collectionName: "sessions",
+    }),
+    cookie: { maxAge: 1000 * 60 * 60 }, // 1 hour
+  })
+);
 app.use("/api/rsvp", rsvpRoutes);
 
 app.get("/", (req, res) => {
-  res.render("dashboard");
+  const { msg } = req.query;
+  res.render("dashboard", { msg });
 });
 
 const start = async () => {

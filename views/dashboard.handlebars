@@ -10,13 +10,23 @@
 
   <div class="min-h-screen flex flex-col md:flex-row">
 
-    <!-- Left: Background Image Section -->
-    <div class="md:w-1/2 w-full h-64 md:h-auto bg-cover bg-center" style="background-image: url('assets/images/rsvp_bg.jpeg');">
-      <!-- Optional overlay -->
-      <div class="w-full h-full bg-black/40 flex items-center justify-center">
-        <h1 class="text-white text-3xl md:text-5xl font-bold text-center px-4">સત્યનારાયણ ભગવાનની કથા</h1>
-      </div>
-    </div>
+   <!-- Left: Background Image Section -->
+<div class="relative md:w-1/2 w-full h-64 md:h-auto bg-cover bg-center" style="background-image: url('assets/images/rsvp_bg.jpeg');">
+  <!-- Overlay -->
+  <div class="absolute inset-0 bg-black/40 flex flex-col items-center justify-center px-4 text-center">
+    <h1 class="text-white text-3xl md:text-5xl font-bold mb-4">સત્યનારાયણ ભગવાનની કથા</h1>
+
+    <!-- Map Icon Button -->
+    {{!-- <a href="https://g.co/kgs/V5azqcv" target="_blank" class="mt-2 text-white hover:text-yellow-300 transition duration-200">
+      <!-- You can use an emoji or SVG icon -->
+     <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 0 24" stroke="currentColor">
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9.75L12 3l9 6.75M4.5 10.5v9.75h5.25V15h4.5v5.25H19.5V10.5" />
+</svg>
+      <p class="text-1xl mt-1" style="align: left;"></p>
+    </a> --}}
+  </div>
+</div>
+
 
     <!-- Right: RSVP Section -->
     <div class="md:w-1/2 w-full flex flex-col justify-center items-center px-6 py-10">
@@ -24,13 +34,36 @@
         <h2 class="text-2xl font-semibold mb-2 text-center">You're Invited!</h2>
         <p class="text-center text-lg mb-4">Join us for a special celebration 🎉</p>
         <div class="text-sm text-center mb-6">
-          <p><strong>Date:</strong> August 10, 2025</p>
-          <p><strong>Time:</strong> 3:00 PM</p>
-          <p><strong>Location:</strong> 425 Porte Road, Ajax, ON, L1S 0E4 <a href="https://g.co/kgs/V5azqcv" target="_blank" class="text-blue-600 underline">View Map</a></p>
-        </div>
+  <p class="flex items-center justify-center gap-2">
+    <strong>Date:</strong> August 10, 2025
+  </p>
+  <p class="flex items-center justify-center gap-2">
+    <strong>Time:</strong> 3:00 PM
+  </p>
+   <p class="flex items-center justify-center gap-2">
+    <strong>Address:</strong> 425 Porte Rd, Ajax, ON, L1S 0E4
+  </p>
+
+  <!-- Location Icon + Link -->
+  <a href="https://g.co/kgs/V5azqcv" target="_blank" class="flex items-center justify-center gap-2 text-blue-600 hover:underline mt-2">
+    <!-- Home Icon -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9.75L12 3l9 6.75M4.5 10.5v9.75h5.25V15h4.5v5.25H19.5V10.5" />
+    </svg>
+    <span>View Location</span>
+  </a>
+</div>
+
+<div id="godModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+  <div class="bg-white rounded-2xl shadow-xl p-6 text-center max-w-sm w-full animate-pulse">
+    <img src="/assets/images/vishnubhagvaan.jpg" alt="Satyanarayan" class="w-24 mx-auto mb-4" />
+    <h2 class="text-xl font-semibold text-purple-700">Sending your RSVP...</h2>
+    <p class="text-gray-600 mt-2">Seeking blessings from Satyanarayan Bhagwan 🙏</p>
+  </div>
+</div>
 
         <!-- RSVP Form -->
-        <form id="rsvpForm" class="space-y-4" method="post" action="">
+        <form id="rsvpForm" class="space-y-4" method="post" action="/api/rsvp/">
           <input type="text" name="name" placeholder="Your Full Name" required class="w-full px-4 py-2 border rounded-xl" />
           <input type="email" name="email" placeholder="Email Address" required class="w-full px-4 py-2 border rounded-xl" />
           <select name="attendance" required class="w-full px-4 py-2 border rounded-xl">
@@ -41,23 +74,41 @@
           <input type="number" name="guests" placeholder="Number of Guests" min="0" class="w-full px-4 py-2 border rounded-xl" />
           <button type="submit" class="w-full bg-purple-600 text-white font-semibold py-2 rounded-xl hover:bg-purple-700 transition">Submit RSVP</button>
         </form>
-        <p id="confirmationMsg" class="mt-4 text-green-600 font-medium hidden text-center">Thank you for your RSVP! 🎉</p>
+        
+        {{!-- <p id="confirmationMsg" class="mt-4 text-green-600 font-medium hidden text-center">Thank you for your RSVP! 🎉</p> --}}
+        <p id="confirmationMsg" class="mt-4 text-green-600 font-medium text-center"></p>
+
       </div>
 
       <!-- Footer -->
       <footer class="text-center text-sm text-gray-600 mt-6">
-        Questions? <a href="mailto:host@example.com" class="text-blue-600 underline">Contact us</a>
+        <h3 style="background-color: rgb(222, 60, 60);color:white;padding:10px;border-radius:10px">We expect your RSVP Before 31st July 2025</h3>
       </footer>
     </div>
   </div>
 
-  <!-- Script -->
-  <script>
-    document.getElementById("rsvpForm").addEventListener("submit", function (e) {
-      e.preventDefault();
-      document.getElementById("confirmationMsg").classList.remove("hidden");
-      this.reset();
-    });
-  </script>
+ <script>
+          const params = new URLSearchParams(window.location.search);
+          const msg = params.get("msg");
+          if (msg) {
+            if(msg=='You have already Registered 😕 Use another Email'){
+                  const coloredText = '<span style="color: rgb(222, 60, 60);">You have already Registered 😕 Use another Email.</span>';
+                  document.getElementById("confirmationMsg").innerHTML = coloredText;
+
+            }else{
+                            document.getElementById("confirmationMsg").innerHTML = msg;
+
+            }
+          }
+
+  const rsvpForm = document.getElementById("rsvpForm");
+  const modal = document.getElementById("godModal");
+
+  rsvpForm.addEventListener("submit", function (e) {
+    // Show spiritual modal
+    modal.classList.remove("hidden");
+
+  });
+  </script> 
 </body>
 </html>

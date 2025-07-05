@@ -5,6 +5,8 @@ const rsvpController = require("../controllers/rsvpController");
 // POST - Create RSVP
 router.post("/", rsvpController.createRSVP);
 
+router.get("/dashboard", rsvpController.getRSVPList);
+
 // PUT - Update RSVP
 router.put("/:id", rsvpController.updateRSVP);
 

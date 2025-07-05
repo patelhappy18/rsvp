@@ -1,16 +1,55 @@
 const RSVP = require("../models/RSVP");
+const { sendRSVPConfirmation } = require("../utils/mailer");
 
 // Create RSVP
+
 exports.createRSVP = async (req, res) => {
   try {
-    const newRSVP = new RSVP(req.body);
-    await newRSVP.save();
-    res.status(201).json({ message: "RSVP submitted successfully!" });
+    const user = await RSVP.findOne({ email: req.body.email });
+    if (!user) {
+      const newRSVP = new RSVP(req.body);
+      await newRSVP.save();
+      const rsvps = await RSVP.find().sort({ createdAt: -1 }).lean();
+      const totalGuests = rsvps.reduce(
+        (sum, rsvp) => sum + (rsvp.guests || 0),
+        0
+      );
+      await sendRSVPConfirmation(
+        req.body.email,
+        req.body.name,
+        req.body.guests,
+        totalGuests
+      );
+
+      return res.redirect(`/?msg=Thank you for your RSVP! 🎉`);
+    } else {
+      return res.redirect(
+        `/?msg=You have already Registered 😕 Use another Email`
+      );
+    }
   } catch (err) {
-    res.status(500).json({ error: "Failed to submit RSVP." });
+    res.status(500).json({ err });
   }
 };
 
+exports.getRSVPList = async (req, res) => {
+  try {
+    const rsvps = await RSVP.find().sort({ createdAt: -1 }).lean();
+    const totalRSVPs = rsvps.length;
+    const totalGuests = rsvps.reduce(
+      (sum, rsvp) => sum + (rsvp.guests || 0),
+      0
+    );
+
+    res.render("admin", {
+      totalRSVPs,
+      totalGuests,
+      rsvps,
+    });
+  } catch (err) {
+    res.status(500).send("Error loading dashboard");
+  }
+};
 // Update RSVP
 exports.updateRSVP = async (req, res) => {
   try {
