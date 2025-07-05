@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vrishti</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+
+  <div class="min-h-screen flex flex-col md:flex-row">
+
+    <!-- Left: Background Image Section -->
+    <div class="md:w-1/2 w-full h-64 md:h-auto bg-cover bg-center" style="background-image: url('assets/images/rsvp_bg.jpeg');">
+      <!-- Optional overlay -->
+      <div class="w-full h-full bg-black/40 flex items-center justify-center">
+        <h1 class="text-white text-3xl md:text-5xl font-bold text-center px-4">સત્યનારાયણ ભગવાનની કથા</h1>
+      </div>
+    </div>
+
+    <!-- Right: RSVP Section -->
+    <div class="md:w-1/2 w-full flex flex-col justify-center items-center px-6 py-10">
+      <div class="max-w-md w-full bg-white shadow-xl rounded-2xl p-8">
+        <h2 class="text-2xl font-semibold mb-2 text-center">You're Invited!</h2>
+        <p class="text-center text-lg mb-4">Join us for a special celebration 🎉</p>
+        <div class="text-sm text-center mb-6">
+          <p><strong>Date:</strong> August 10, 2025</p>
+          <p><strong>Time:</strong> 3:00 PM</p>
+          <p><strong>Location:</strong> 425 Porte Road, Ajax, ON, L1S 0E4 <a href="https://g.co/kgs/V5azqcv" target="_blank" class="text-blue-600 underline">View Map</a></p>
+        </div>
+
+        <!-- RSVP Form -->
+        <form id="rsvpForm" class="space-y-4" method="post" action="">
+          <input type="text" name="name" placeholder="Your Full Name" required class="w-full px-4 py-2 border rounded-xl" />
+          <input type="email" name="email" placeholder="Email Address" required class="w-full px-4 py-2 border rounded-xl" />
+          <select name="attendance" required class="w-full px-4 py-2 border rounded-xl">
+            <option value="">Will you attend?</option>
+            <option value="yes">Yes, I’ll be there</option>
+            <option value="no">Sorry, I can’t make it</option>
+          </select>
+          <input type="number" name="guests" placeholder="Number of Guests" min="0" class="w-full px-4 py-2 border rounded-xl" />
+          <button type="submit" class="w-full bg-purple-600 text-white font-semibold py-2 rounded-xl hover:bg-purple-700 transition">Submit RSVP</button>
+        </form>
+        <p id="confirmationMsg" class="mt-4 text-green-600 font-medium hidden text-center">Thank you for your RSVP! 🎉</p>
+      </div>
+
+      <!-- Footer -->
+      <footer class="text-center text-sm text-gray-600 mt-6">
+        Questions? <a href="mailto:host@example.com" class="text-blue-600 underline">Contact us</a>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Script -->
+  <script>
+    document.getElementById("rsvpForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      document.getElementById("confirmationMsg").classList.remove("hidden");
+      this.reset();
+    });
+  </script>
+</body>
+</html>
