@@ -25,7 +25,7 @@ const sendRSVPConfirmation = async (
 ) => {
   const mailOptions2 = {
     from: `"Event Host" Vihang & Drashti Patel`,
-    to: "patelhappy9581@gmail.com",
+    to: "patelvihang77@gmail.com",
     subject: "RSVP Confirmation Count ",
     html: `
   <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; padding: 20px; line-height: 1.6;">
