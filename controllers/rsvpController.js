@@ -9,6 +9,7 @@ exports.createRSVP = async (req, res) => {
     if (!user) {
       const newRSVP = new RSVP(req.body);
       await newRSVP.save();
+
       const rsvps = await RSVP.find().sort({ createdAt: -1 }).lean();
       const totalGuests = rsvps.reduce(
         (sum, rsvp) => sum + (rsvp.guests || 0),
@@ -18,7 +19,9 @@ exports.createRSVP = async (req, res) => {
         req.body.email,
         req.body.name,
         req.body.guests,
-        totalGuests
+        totalGuests,
+        newRSVP.email,
+        newRSVP.name
       );
 
       return res.redirect(`/?msg=Thank you for your RSVP! 🎉`);
@@ -50,15 +53,45 @@ exports.getRSVPList = async (req, res) => {
     res.status(500).send("Error loading dashboard");
   }
 };
+
+exports.updateRSVPUI = async (req, res) => {
+  const { email, name } = req.query;
+  res.render("updateRSVP", { email, name });
+};
+
 // Update RSVP
 exports.updateRSVP = async (req, res) => {
+  const { email, guests, attendance } = req.body;
+  console.log(req.body);
+
   try {
-    const updated = await RSVP.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
-    res.json(updated);
+    const updated = await RSVP.findOneAndUpdate(
+      { email }, // 🔍 find by email
+      { $set: { guests, attendance } }, // ✏️ update only the required fields
+      { new: true } // 🔄 return updated document
+    );
+
+    if (!updated) {
+      return res.status(404).json({ error: "RSVP with this email not found." });
+    }
+
+    const rsvps = await RSVP.find().sort({ createdAt: -1 }).lean();
+    const totalGuests = rsvps.reduce(
+      (sum, rsvp) => sum + (rsvp.guests || 0),
+      0
+    );
+    await sendRSVPConfirmation(
+      req.body.email,
+      req.body.name,
+      req.body.guests,
+      totalGuests,
+      req.body.email,
+      req.body.name
+    );
+
+    return res.redirect(`/?msg=Thank you for your RSVP! 🎉`);
   } catch (err) {
-    res.status(500).json({ error: "Failed to update RSVP." });
+    return res.redirect(`/?msg=Failed to update RSVP record.😕`);
   }
 };
 

@@ -7,8 +7,10 @@ router.post("/", rsvpController.createRSVP);
 
 router.get("/dashboard/vihang", rsvpController.getRSVPList);
 
+router.get("/updatersvp", rsvpController.updateRSVPUI);
+
 // PUT - Update RSVP
-router.put("/:id", rsvpController.updateRSVP);
+router.post("/updatersvpRecord", rsvpController.updateRSVP);
 
 // DELETE - Delete RSVP
 router.delete("/:id", rsvpController.deleteRSVP);

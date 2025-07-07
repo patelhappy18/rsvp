@@ -21,7 +21,9 @@ const sendRSVPConfirmation = async (
   to,
   name,
   guestsInThisBooking,
-  totalGuests
+  totalGuests,
+  email,
+  rsvpname
 ) => {
   const mailOptions2 = {
     from: `"Event Host" Vihang & Drashti Patel`,
@@ -66,6 +68,15 @@ const sendRSVPConfirmation = async (
         <p style="margin: 0;"><strong>⏰ Time:</strong> 3:00 PM</p>
         <p style="margin: 0;"><strong>📍 Location:</strong> 425 Porte Road, Ajax, ON</p>
       </div>
+
+      <p>If you want to update your RSVP details, click the button below:</p>
+
+      <p style="text-align: center;">
+        <a href="https://vrishti-canada-rsvp.onrender.com/api/rsvp/updatersvp?email=${email}&name=${rsvpname}" 
+           style="display: inline-block; padding: 10px 20px; background-color: #6b46c1; color: white; text-decoration: none; border-radius: 6px;">
+          Update My RSVP
+        </a>
+      </p>
 
       <p>If you have any questions or need assistance, feel free to reply to this email.</p>
 
