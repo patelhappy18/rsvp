@@ -20,7 +20,7 @@
   <div class="min-h-screen flex flex-col md:flex-row">
 
    <!-- Left: Background Image Section -->
-<div class="relative md:w-1/2 w-full h-64 md:h-auto bg-cover bg-center" style="background-image: url('/assets/images/rsvp_bg.jpeg');">
+<div class="relative md:w-1/2 w-full h-64 md:h-auto bg-cover bg-center" style="background-image: url('assets/images/rsvp_bg.jpeg');">
   <!-- Overlay -->
   <div class="absolute inset-0 bg-black/40 flex flex-col items-center justify-center px-4 text-center">
     <h1 class="text-white text-3xl md:text-5xl font-bold mb-4">શ્રી સત્યનારાયણની કથા</h1>
@@ -40,7 +40,7 @@
     <!-- Right: RSVP Section -->
     <div class="md:w-1/2 w-full flex flex-col justify-center items-center px-6 py-10">
       <div class="max-w-md w-full bg-white shadow-xl rounded-2xl p-8">
-        <h2 class="text-2xl font-semibold mb-2 text-center">Update your RSVP</h2>
+        <h2 class="text-2xl font-semibold mb-2 text-center">You're Invited!</h2>
         <p class="text-center text-lg mb-4">Join us for a special celebration 🎉</p>
         <div class="text-sm text-center mb-6">
   <p class="flex items-center justify-center gap-2">
@@ -72,16 +72,16 @@
 </div>
 
         <!-- RSVP Form -->
-        <form id="rsvpForm" class="space-y-4" method="post" action="/api/rsvp/updatersvpRecord">
-          <input type="text" name="name" placeholder="Your Full Name" value="{{name}}" readonly class="w-full px-4 py-2 border rounded-xl" />
-          <input type="email" name="email" placeholder="Email Address" value="{{email}}" readonly class="w-full px-4 py-2 border rounded-xl" />
+        <form id="rsvpForm" class="space-y-4" method="post" action="/api/rsvp/">
+          <input type="text" name="name" placeholder="Your Full Name" required class="w-full px-4 py-2 border rounded-xl" />
+          <input type="email" name="email" placeholder="Email Address" required class="w-full px-4 py-2 border rounded-xl" />
           <select name="attendance" required class="w-full px-4 py-2 border rounded-xl">
             <option value="">Will you attend?</option>
             <option value="yes">Yes, I’ll be there</option>
             <option value="no">Sorry, I can’t make it</option>
           </select>
           <input type="number" name="guests" placeholder="Number of Guests" min="0" class="w-full px-4 py-2 border rounded-xl" />
-          <button type="submit" class="w-full bg-purple-600 text-white font-semibold py-2 rounded-xl hover:bg-purple-700 transition">Update RSVP</button>
+          <button type="submit" class="w-full bg-purple-600 text-white font-semibold py-2 rounded-xl hover:bg-purple-700 transition">Submit RSVP</button>
         </form>
         
         {{!-- <p id="confirmationMsg" class="mt-4 text-green-600 font-medium hidden text-center">Thank you for your RSVP! 🎉</p> --}}
