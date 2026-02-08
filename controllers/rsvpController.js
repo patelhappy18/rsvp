@@ -6,49 +6,38 @@ const { sendRSVPConfirmation } = require("../utils/mailer");
 exports.createRSVP = async (req, res) => {
   try {
     const user = await RSVP.findOne({ email: req.body.email });
+    if (!user) {
+      const newRSVP = new RSVP(req.body);
+      await newRSVP.save();
 
-    if (user) {
+      const rsvps = await RSVP.find().sort({ createdAt: -1 }).lean();
+      const totals = rsvps.reduce(
+        (acc, rsvp) => {
+          if (rsvp.attendance === "yes") {
+            acc.totalAdults += Number(rsvp.adults || 0);
+            acc.totalKids += Number(rsvp.kids || 0);
+          }
+          return acc;
+        },
+        { totalAdults: 0, totalKids: 0 }
+      );
+
+      await sendRSVPConfirmation(
+        req.body.email,
+        req.body.name,
+        totals.totalAdults,
+        totals.totalKids,
+        newRSVP.email,
+        newRSVP.name
+      );
+
+      return res.redirect(`/?msg=Thank you for your RSVP! 🎉`);
+    } else {
       return res.redirect(
         `/?msg=You have already Registered 😕 Use another Email`
       );
     }
-
-    // 1️⃣ Save RSVP (fast)
-    const newRSVP = new RSVP(req.body);
-    await newRSVP.save();
-
-    // 3️⃣ Send email in background (no await)
-    (async () => {
-      try {
-        const rsvps = await RSVP.find().lean();
-        const totals = rsvps.reduce(
-          (acc, rsvp) => {
-            if (rsvp.attendance === "yes") {
-              acc.totalAdults += Number(rsvp.adults || 0);
-              acc.totalKids += Number(rsvp.kids || 0);
-            }
-            return acc;
-          },
-          { totalAdults: 0, totalKids: 0 }
-        );
-
-        await sendRSVPConfirmation(
-          newRSVP.email,
-          newRSVP.name,
-          totals.totalAdults,
-          totals.totalKids,
-          newRSVP.email,
-          newRSVP.name
-        );
-      } catch (e) {
-        console.error("Email failed:", e);
-      }
-    })();
-
-    // 2️⃣ Redirect IMMEDIATELY ⚡
-    res.redirect(`/?msg=Thank you for your RSVP! 🎉`);
   } catch (err) {
-    console.error(err);
     res.status(500).json({ err });
   }
 };
@@ -77,7 +66,7 @@ exports.getRSVPList = async (req, res) => {
       totalAdults: totals.totalAdults,
       totalKids: totals.totalKids,
       totalGuests,
-      rsvps, // 👈 array of all RSVP docs
+      rsvps,
     });
   } catch (err) {
     console.error(err);
