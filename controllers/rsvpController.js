@@ -77,7 +77,7 @@ exports.getRSVPList = async (req, res) => {
       totalAdults: totals.totalAdults,
       totalKids: totals.totalKids,
       totalGuests,
-      rsvps,
+      rsvps, // 👈 array of all RSVP docs
     });
   } catch (err) {
     console.error(err);

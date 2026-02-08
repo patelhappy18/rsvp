@@ -1,27 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>RSVP Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center px-4">
-  <div class="grid grid-cols-3 gap-4 text-center">
-  <div class="bg-white p-4 rounded-xl shadow">
-    <h3 class="text-lg font-semibold">Adults</h3>
-    <p class="text-2xl font-bold text-blue-600">{{totalAdults}}</p>
+
+<body class="bg-gray-100 min-h-screen px-6 py-10">
+
+  <!-- Page Title -->
+  <h1 class="text-3xl font-bold text-[#000066] text-center mb-10">
+    RSVP Admin Dashboard
+  </h1>
+
+  <!-- Summary Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto text-center">
+    <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+      <h3 class="text-lg font-semibold text-gray-600">Adults</h3>
+      <p class="text-3xl font-bold text-[#000066] mt-2">
+        {{totalAdults}}
+      </p>
+    </div>
+
+    <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+      <h3 class="text-lg font-semibold text-gray-600">Kids</h3>
+      <p class="text-3xl font-bold text-pink-600 mt-2">
+        {{totalKids}}
+      </p>
+    </div>
+
+    <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+      <h3 class="text-lg font-semibold text-gray-600">Total Guests</h3>
+      <p class="text-3xl font-bold text-green-600 mt-2">
+        {{totalGuests}}
+      </p>
+    </div>
   </div>
 
-  <div class="bg-white p-4 rounded-xl shadow">
-    <h3 class="text-lg font-semibold">Kids</h3>
-    <p class="text-2xl font-bold text-pink-600">{{totalKids}}</p>
-  </div>
+  <!-- RSVP Table -->
+  <div class="max-w-6xl mx-auto mt-14 bg-white rounded-2xl shadow p-6">
+    <h2 class="text-2xl font-semibold text-[#000066] mb-6">
+      📋 RSVP Details
+    </h2>
 
-  <div class="bg-white p-4 rounded-xl shadow">
-    <h3 class="text-lg font-semibold">Total Guests</h3>
-    <p class="text-2xl font-bold text-green-600">{{totalGuests}}</p>
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse">
+        <thead>
+          <tr class="bg-[#000066] text-white">
+            <th class="py-3 px-4 text-left">Full Name</th>
+            <th class="py-3 px-4 text-center">Adults</th>
+            <th class="py-3 px-4 text-center">Kids</th>
+            <th class="py-3 px-4 text-center">Attendance</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {{#each rsvps}}
+          <tr class="border-b hover:bg-gray-50 transition">
+            <td class="py-3 px-4 font-medium text-gray-800">
+              {{this.name}}
+            </td>
+            <td class="py-3 px-4 text-center">
+              {{this.adults}}
+            </td>
+            <td class="py-3 px-4 text-center">
+              {{this.kids}}
+            </td>
+            <td class="py-3 px-4 text-center font-semibold text-[#000066]">
+              {{this.attendance}}
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
   </div>
-</div>
 
 </body>
 </html>

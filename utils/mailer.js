@@ -25,38 +25,36 @@ const sendRSVPConfirmation = async (
   email,
   rsvpname
 ) => {
-  const mailOptions2 = {
-    from: `"Event Host" Vihang & Drashti Patel`,
-    to: "patelhappy9581@gmail.com",
-    subject: "RSVP Confirmation Count ",
-    html: `
-  <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; padding: 20px; line-height: 1.6;">
-    <div style="max-width: 600px; margin: auto; background: #f9f9f9; border-radius: 10px; padding: 30px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-      <h2 style="color: #6b46c1; text-align: center;">Total RSVP count for Satyanarayan Bhagwan Katha </h2>
+  //   const mailOptions2 = {
+  //     from: `"Event Host" Vihang & Drashti Patel`,
+  //     to: "patelvihang77.com",
+  //     subject: "RSVP Confirmation Count ",
+  //     html: `
+  //   <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; padding: 20px; line-height: 1.6;">
+  //     <div style="max-width: 600px; margin: auto; background: #f9f9f9; border-radius: 10px; padding: 30px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+  //       <h2 style="color: #6b46c1; text-align: center;">Total RSVP count for Satyanarayan Bhagwan Katha </h2>
 
-      <p>Dear <strong>Vihang</strong>,</p>
+  //       <p>Dear <strong>Vihang</strong>,</p>
 
-      <div style="background: #fff; border-left: 4px solid #6b46c1; padding: 15px; margin: 20px 0; border-radius: 6px;">
-        <p style="margin: 0;"><strong>📅 RSVP Total Guest:</strong> Adults: ${adults} Kids: ${kids}</p>
-      </div>
+  //       <div style="background: #fff; border-left: 4px solid #6b46c1; padding: 15px; margin: 20px 0; border-radius: 6px;">
+  //         <p style="margin: 0;"><strong>📅 RSVP Total Guest:</strong> Adults: ${adults} Kids: ${kids}</p>
+  //       </div>
 
+  //     <p style="text-align: center;">
+  //     <a href="https://babyshower-vqvt.onrender.com/api/rsvp/updatersvp?email=${email}&name=${rsvpname}"
+  //        style="display: inline-block; padding: 10px 20px; background-color: #6b46c1; color: white; text-decoration: none; border-radius: 6px;">
+  //       Update My RSVP
+  //     </a>
+  //   </p>
 
-    <p style="text-align: center;">
-    <a href="https://babyshower-vqvt.onrender.com/api/rsvp/updatersvp?email=${email}&name=${rsvpname}" 
-       style="display: inline-block; padding: 10px 20px; background-color: #6b46c1; color: white; text-decoration: none; border-radius: 6px;">
-      Update My RSVP
-    </a>
-  </p>
-
-
-      <hr style="margin-top: 40px; border: none; border-top: 1px solid #ddd;" />
-      <p style="font-size: 12px; color: #777; text-align: center;">
-        This is an automated confirmation message. Please do not reply directly.
-      </p>
-    </div>
-  </div>
-`,
-  };
+  //       <hr style="margin-top: 40px; border: none; border-top: 1px solid #ddd;" />
+  //       <p style="font-size: 12px; color: #777; text-align: center;">
+  //         This is an automated confirmation message. Please do not reply directly.
+  //       </p>
+  //     </div>
+  //   </div>
+  // `,
+  //   };
 
   const mailOptions = {
     from: `"Event Host" Vihang & Drashti Patel`,
@@ -107,7 +105,7 @@ const sendRSVPConfirmation = async (
   };
 
   await transporter.sendMail(mailOptions);
-  await transporter.sendMail(mailOptions2);
+  // await transporter.sendMail(mailOptions2);
 };
 
 module.exports = { sendRSVPConfirmation };
