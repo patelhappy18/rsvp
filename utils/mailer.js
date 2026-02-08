@@ -17,14 +17,7 @@ const transporter = nodemailer.createTransport({
 //   },
 // });
 
-const sendRSVPConfirmation = async (
-  to,
-  name,
-  adults,
-  kids,
-  email,
-  rsvpname
-) => {
+const sendRSVPConfirmation = async (to, name, email, rsvpname) => {
   const mailOptions = {
     from: `"Event Host" Vihang & Drashti Patel`,
     to: to,
@@ -37,7 +30,7 @@ const sendRSVPConfirmation = async (
       <p>Dear <strong>${name}</strong>,</p>
 
       <p>
-        Thank you for confirming your RSVP for <strong>Adults: ${adults} Kids:${kids} </strong>.
+        Thank you for confirming your RSVP </strong>.
         We are so excited to celebrate this special moment with you at our <strong>Baby Shower</strong> 👶✨
       </p>
 

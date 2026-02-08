@@ -10,22 +10,20 @@ exports.createRSVP = async (req, res) => {
       const newRSVP = new RSVP(req.body);
       await newRSVP.save();
 
-      const [totals] = await RSVP.aggregate([
-        { $match: { attendance: "yes" } },
-        {
-          $group: {
-            _id: null,
-            totalAdults: { $sum: "$adults" },
-            totalKids: { $sum: "$kids" },
-          },
-        },
-      ]);
+      // const [totals] = await RSVP.aggregate([
+      //   { $match: { attendance: "yes" } },
+      //   {
+      //     $group: {
+      //       _id: null,
+      //       totalAdults: { $sum: "$adults" },
+      //       totalKids: { $sum: "$kids" },
+      //     },
+      //   },
+      // ]);
 
       await sendRSVPConfirmation(
         req.body.email,
         req.body.name,
-        totals.totalAdults,
-        totals.totalKids,
         newRSVP.email,
         newRSVP.name
       );
