@@ -10,17 +10,16 @@ exports.createRSVP = async (req, res) => {
       const newRSVP = new RSVP(req.body);
       await newRSVP.save();
 
-      const rsvps = await RSVP.find().sort({ createdAt: -1 }).lean();
-      const totals = rsvps.reduce(
-        (acc, rsvp) => {
-          if (rsvp.attendance === "yes") {
-            acc.totalAdults += Number(rsvp.adults || 0);
-            acc.totalKids += Number(rsvp.kids || 0);
-          }
-          return acc;
+      const [totals] = await RSVP.aggregate([
+        { $match: { attendance: "yes" } },
+        {
+          $group: {
+            _id: null,
+            totalAdults: { $sum: "$adults" },
+            totalKids: { $sum: "$kids" },
+          },
         },
-        { totalAdults: 0, totalKids: 0 }
-      );
+      ]);
 
       await sendRSVPConfirmation(
         req.body.email,
