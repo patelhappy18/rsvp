@@ -10,14 +10,12 @@ exports.createRSVP = async (req, res) => {
       const newRSVP = new RSVP(req.body);
       await newRSVP.save();
 
-      setImmediate(() => {
-        sendRSVPConfirmation(
-          req.body.email,
-          req.body.name,
-          newRSVP.email,
-          newRSVP.name
-        ).catch(console.error);
-      });
+      await sendRSVPConfirmation(
+        req.body.email,
+        req.body.name,
+        newRSVP.email,
+        newRSVP.name
+      ).catch(console.error);
 
       return res.redirect(`/?msg=Thank you for your RSVP! 🎉`);
     } else {
