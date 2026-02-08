@@ -35,7 +35,7 @@ const sendRSVPConfirmation = async (to, name, email, rsvpname) => {
 
       <p>If you need to update your RSVP details, you can do so using the button below:</p>
        <p style="text-align: center;">
-        <a href="http://localhost:5000/api/rsvp/updatersvp?email=${email}&name=${rsvpname}" 
+        <a href="https://babyshower-vqvt.onrender.com/api/rsvp/updatersvp?email=${email}&name=${rsvpname}" 
            style="display: inline-block; padding: 10px 20px; background-color: #6b46c1; color: white; text-decoration: none; border-radius: 6px;">
           Update My RSVP
         </a>
