@@ -81,37 +81,55 @@ exports.updateRSVPUI = async (req, res) => {
 
 // Update RSVP
 exports.updateRSVP = async (req, res) => {
-  const { email, guests, attendance } = req.body;
-  console.log(req.body);
-
   try {
-    const updated = await RSVP.findOneAndUpdate(
-      { email }, // 🔍 find by email
-      { $set: { guests, attendance } }, // ✏️ update only the required fields
-      { new: true } // 🔄 return updated document
+    const { email, attendance, adults, kids, name } = req.body;
+
+    // 1️⃣ Update RSVP record
+    const updatedRSVP = await RSVP.findOneAndUpdate(
+      { email },
+      {
+        $set: {
+          attendance,
+          adults: Number(adults || 0),
+          kids: Number(kids || 0),
+        },
+      },
+      { new: true }
     );
 
-    if (!updated) {
-      return res.status(404).json({ error: "RSVP with this email not found." });
+    if (!updatedRSVP) {
+      return res.redirect(`/?msg=RSVP record not found 😕`);
     }
 
-    const rsvps = await RSVP.find().sort({ createdAt: -1 }).lean();
-    const totalGuests = rsvps.reduce(
-      (sum, rsvp) => sum + (rsvp.guests || 0),
-      0
-    );
-    await sendRSVPConfirmation(
-      req.body.email,
-      req.body.name,
-      req.body.guests,
-      totalGuests,
-      req.body.email,
-      req.body.name
+    // 2️⃣ Recalculate totals (same logic as createRSVP)
+    const rsvps = await RSVP.find().lean();
+
+    const totals = rsvps.reduce(
+      (acc, rsvp) => {
+        if (rsvp.attendance === "yes") {
+          acc.totalAdults += Number(rsvp.adults || 0);
+          acc.totalKids += Number(rsvp.kids || 0);
+        }
+        return acc;
+      },
+      { totalAdults: 0, totalKids: 0 }
     );
 
-    return res.redirect(`/?msg=Thank you for your RSVP! 🎉`);
+    // 3️⃣ Send updated confirmation email
+    await sendRSVPConfirmation(
+      email,
+      name,
+      totals.totalAdults,
+      totals.totalKids,
+      updatedRSVP.email,
+      updatedRSVP.name
+    );
+
+    // 4️⃣ Redirect success
+    return res.redirect(`/?msg=Your RSVP has been updated successfully 🎉`);
   } catch (err) {
-    return res.redirect(`/?msg=Failed to update RSVP record.😕`);
+    console.error(err);
+    return res.redirect(`/?msg=Failed to update RSVP 😕`);
   }
 };
 

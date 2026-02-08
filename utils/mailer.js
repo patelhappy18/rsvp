@@ -41,6 +41,14 @@ const sendRSVPConfirmation = async (
       </div>
 
 
+    <p style="text-align: center;">
+    <a href="https://babyshower-vqvt.onrender.com/api/rsvp/updatersvp?email=${email}&name=${rsvpname}" 
+       style="display: inline-block; padding: 10px 20px; background-color: #6b46c1; color: white; text-decoration: none; border-radius: 6px;">
+      Update My RSVP
+    </a>
+  </p>
+
+
       <hr style="margin-top: 40px; border: none; border-top: 1px solid #ddd;" />
       <p style="font-size: 12px; color: #777; text-align: center;">
         This is an automated confirmation message. Please do not reply directly.
@@ -53,11 +61,11 @@ const sendRSVPConfirmation = async (
   const mailOptions = {
     from: `"Event Host" Vihang & Drashti Patel`,
     to: to,
-    subject: "RSVP Confirmation – Baby Shower 👶🎀",
+    subject: "RSVP Confirmation – Baby Shower 👶",
     html: `
   <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; padding: 20px; line-height: 1.6;">
     <div style="max-width: 600px; margin: auto; background: #f9f9f9; border-radius: 10px; padding: 30px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-      <h2 style="color: #ff8000; text-align: center;">🎀 Baby Shower – RSVP Confirmation</h2>
+      <h2 style="color: #000066; text-align: center;"> Baby Shower – RSVP Confirmation</h2>
 
       <p>Dear <strong>${name}</strong>,</p>
 
@@ -75,7 +83,12 @@ const sendRSVPConfirmation = async (
         </div>
 
       <p>If you need to update your RSVP details, you can do so using the button below:</p>
-
+       <p style="text-align: center;">
+        <a href="http://localhost:5000/api/rsvp/updatersvp?email=${email}&name=${rsvpname}" 
+           style="display: inline-block; padding: 10px 20px; background-color: #6b46c1; color: white; text-decoration: none; border-radius: 6px;">
+          Update My RSVP
+        </a>
+      </p>
 
       <p>If you have any questions, feel free to reach out to us.</p>
 

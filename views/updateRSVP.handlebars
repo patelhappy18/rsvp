@@ -34,7 +34,6 @@
   <div class="relative md:w-1/2 w-full h-64 md:h-auto bg-cover bg-center"
        style="background-image: url('/assets/images/radhakrishna.jpg');">
     <div class="absolute inset-0 bg-black/30 flex items-center justify-center text-center">
-      <h1 class="text-white text-4xl font-bold">Update Your RSVP 🎀</h1>
     </div>
   </div>
 
@@ -45,7 +44,7 @@
     <div class="max-w-md w-full bg-white shadow-2xl rounded-3xl p-8 animate-fadeIn">
 
       <h2 class="text-2xl font-semibold mb-2 text-center text-pink-600">
-        Update Your Baby Shower RSVP
+        Update Your RSVP for Baby Shower 
       </h2>
 
       <p class="text-center text-lg mb-4 text-gray-700">
@@ -70,6 +69,13 @@
         </a>
       </div>
 
+<div id="godModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+  <div class="bg-white rounded-2xl shadow-xl p-6 text-center max-w-sm w-full animate-pulse">
+    <img src="/assets/images/ganpati.jpg" alt="Satyanarayan" class="w-24 mx-auto mb-4" />
+    <h2 class="text-xl font-semibold text-purple-700">Sending your RSVP...</h2>
+    <p class="text-gray-600 mt-2">Thank You 🙏</p>
+  </div>
+</div>
       <!-- Update RSVP Form -->
       <form id="rsvpForm"
             method="post"
@@ -142,6 +148,15 @@
   if (msg) {
     document.getElementById("confirmationMsg").innerText = msg;
   }
+
+  const rsvpForm = document.getElementById("rsvpForm");
+  const modal = document.getElementById("godModal");
+
+  rsvpForm.addEventListener("submit", function (e) {
+    // Show spiritual modal
+    modal.classList.remove("hidden");
+
+  });
 </script>
 
 </body>
