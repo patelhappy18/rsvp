@@ -20,14 +20,14 @@ const transporter = nodemailer.createTransport({
 const sendRSVPConfirmation = async (
   to,
   name,
-  guestsInThisBooking,
-  totalGuests,
+  adults,
+  kids,
   email,
   rsvpname
 ) => {
   const mailOptions2 = {
     from: `"Event Host" Vihang & Drashti Patel`,
-    to: "patelvihang77@gmail.com",
+    to: "patelhappy9581@gmail.com",
     subject: "RSVP Confirmation Count ",
     html: `
   <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; padding: 20px; line-height: 1.6;">
@@ -37,7 +37,7 @@ const sendRSVPConfirmation = async (
       <p>Dear <strong>Vihang</strong>,</p>
 
       <div style="background: #fff; border-left: 4px solid #6b46c1; padding: 15px; margin: 20px 0; border-radius: 6px;">
-        <p style="margin: 0;"><strong>📅 RSVP Total Guest:</strong> ${totalGuests}</p>
+        <p style="margin: 0;"><strong>📅 RSVP Total Guest:</strong> Adults: ${adults} Kids: ${kids}</p>
       </div>
 
 
@@ -53,39 +53,40 @@ const sendRSVPConfirmation = async (
   const mailOptions = {
     from: `"Event Host" Vihang & Drashti Patel`,
     to: to,
-    subject: "RSVP Confirmation - સત્યનારાયણ ભગવાનની કથા ",
+    subject: "RSVP Confirmation – Baby Shower 👶🎀",
     html: `
   <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; padding: 20px; line-height: 1.6;">
     <div style="max-width: 600px; margin: auto; background: #f9f9f9; border-radius: 10px; padding: 30px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-      <h2 style="color: #6b46c1; text-align: center;">🙏 Satyanarayan Bhagwan Katha - RSVP Confirmation</h2>
+      <h2 style="color: #ff8000; text-align: center;">🎀 Baby Shower – RSVP Confirmation</h2>
 
       <p>Dear <strong>${name}</strong>,</p>
 
-      <p>Thank you for confirming your RSVP for <strong>${guestsInThisBooking} people</strong>. We are truly delighted to have you join us for the sacred <strong>Satyanarayan Bhagwan Katha</strong>.</p>
-
-      <div style="background: #fff; border-left: 4px solid #6b46c1; padding: 15px; margin: 20px 0; border-radius: 6px;">
-        <p style="margin: 0;"><strong>📅 Date:</strong> August 10, 2025</p>
-        <p style="margin: 0;"><strong>⏰ Time:</strong> 3:00 PM</p>
-        <p style="margin: 0;"><strong>📍 Location:</strong> 425 Porte Road, Ajax, ON</p>
-      </div>
-
-      <p>If you want to update your RSVP details, click the button below:</p>
-
-      <p style="text-align: center;">
-        <a href="https://vrishti-canada-rsvp.onrender.com/api/rsvp/updatersvp?email=${email}&name=${rsvpname}" 
-           style="display: inline-block; padding: 10px 20px; background-color: #6b46c1; color: white; text-decoration: none; border-radius: 6px;">
-          Update My RSVP
-        </a>
+      <p>
+        Thank you for confirming your RSVP for <strong>Adults: ${adults} Kids:${kids} </strong>.
+        We are so excited to celebrate this special moment with you at our <strong>Baby Shower</strong> 👶✨
       </p>
 
-      <p>If you have any questions or need assistance, feel free to reply to this email.</p>
+      <div style="background: #fff; border-left: 4px solid #ec4899; padding: 15px; margin: 20px 0; border-radius: 6px;">
+        <p style="margin: 0;"><strong>📅 Date:</strong> 8th March 2026</p>
+        <p style="margin: 0;"><strong>⏰ Time:</strong> 9:30 AM onwards</p>
+        <p style="margin: 0;"><strong>📍 Location:</strong> <a href="https://www.google.com/maps/place/H.M.S.+Banquet+Hall/@43.8385297,-79.0205891,620m/data=!3m2!1e3!4b1!4m6!3m5!1s0x89d4df000e4f09f5:0xc9df397db967c7d3!8m2!3d43.8385297!4d-79.0205891!16s%2Fg%2F11vzbmb2ql?entry=ttu&g_ep=EgoyMDI2MDIwMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="inline-flex items-center gap-2 text-blue-600 hover:underline">H.M.S. Banquet Hall, Ajax Community Centre, Ajax, ON</a>
+      </p>
+        
+        </div>
 
-      <p style="margin-top: 30px;">Warm regards,<br/>
-      🙏 Vihang & Drashti</p>
+      <p>If you need to update your RSVP details, you can do so using the button below:</p>
+
+
+      <p>If you have any questions, feel free to reach out to us.</p>
+
+      <p style="margin-top: 30px;">
+        With love,<br/>
+        💕 Vihang & Drashti
+      </p>
 
       <hr style="margin-top: 40px; border: none; border-top: 1px solid #ddd;" />
       <p style="font-size: 12px; color: #777; text-align: center;">
-        This is an automated confirmation message. Please do not reply directly.
+        This is an automated confirmation email. Please do not reply directly.
       </p>
     </div>
   </div>

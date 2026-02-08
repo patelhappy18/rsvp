@@ -43,7 +43,7 @@
 <body class="bg-pink-50 text-gray-800">
 
   <!-- Intro Modal -->
-  <div id="introModal" class="fixed inset-0 flex flex-col items-center justify-center z-50" style="background-image: url('/assets/images/main_bg_2.jpeg');">
+  <div id="introModal" class="fixed inset-0 flex flex-col items-center justify-center z-50" style="background-image: url('/assets/images/main_bg_1.jpg');">
     <div class="bg-white rounded-3xl shadow-2xl p-8 flex flex-col items-center text-center animate-bounceScale">
       <img src="/assets/images/ganpati.jpg" 
            alt="Baby" class="w-32 h-32 rounded-full mb-4 shadow-lg">
@@ -83,9 +83,15 @@
               View Location
             </a>
           </div>
-
+<div id="godModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+  <div class="bg-white rounded-2xl shadow-xl p-6 text-center max-w-sm w-full animate-pulse">
+    <img src="/assets/images/vishnubhagvaan.jpg" alt="Satyanarayan" class="w-24 mx-auto mb-4" />
+    <h2 class="text-xl font-semibold text-purple-700">Sending your RSVP...</h2>
+    <p class="text-gray-600 mt-2">Thank You 🙏</p>
+  </div>
+</div>
           <!-- RSVP Form -->
-          <form id="rsvpForm" class="space-y-4">
+          <form id="rsvpForm" class="space-y-4" method="post" action="/api/rsvp/">
             <input type="text" name="name" placeholder="Full Name" required class="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-pink-300">
             <input type="email" name="email" placeholder="Email Address" required class="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-pink-300">
             <select name="attendance" required class="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-pink-300">
@@ -123,16 +129,32 @@
         introModal.style.display = "none";
         mainContent.style.opacity = "1";
       }, 1000); // smooth transition
-    }, 5000);
+    }, 2000);
 
-    // RSVP Form Submit
-    const rsvpForm = document.getElementById("rsvpForm");
-    rsvpForm.addEventListener("submit", function(e){
-      e.preventDefault();
-      document.getElementById("confirmationMsg").innerText = "Thank you for your RSVP! 🎉";
-      rsvpForm.reset();
-    });
+   const params = new URLSearchParams(window.location.search);
+          const msg = params.get("msg");
+          if (msg) {
+            if(msg=='You have already Registered 😕 Use another Email'){
+                  const coloredText = '<span style="color: rgb(222, 60, 60);">You have already Registered 😕 Use another Email.</span>';
+                  document.getElementById("confirmationMsg").innerHTML = coloredText;
+
+            }else{
+                            document.getElementById("confirmationMsg").innerHTML = msg;
+
+            }
+          }
+
+  const rsvpForm = document.getElementById("rsvpForm");
+  const modal = document.getElementById("godModal");
+
+  rsvpForm.addEventListener("submit", function (e) {
+    // Show spiritual modal
+    modal.classList.remove("hidden");
+
+  });
   </script>
 
 </body>
 </html>
+
+    

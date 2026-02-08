@@ -11,15 +11,22 @@ exports.createRSVP = async (req, res) => {
       await newRSVP.save();
 
       const rsvps = await RSVP.find().sort({ createdAt: -1 }).lean();
-      const totalGuests = rsvps.reduce(
-        (sum, rsvp) => sum + (rsvp.guests || 0),
-        0
+      const totals = rsvps.reduce(
+        (acc, rsvp) => {
+          if (rsvp.attendance === "yes") {
+            acc.totalAdults += Number(rsvp.adults || 0);
+            acc.totalKids += Number(rsvp.kids || 0);
+          }
+          return acc;
+        },
+        { totalAdults: 0, totalKids: 0 }
       );
+
       await sendRSVPConfirmation(
         req.body.email,
         req.body.name,
-        req.body.guests,
-        totalGuests,
+        totals.totalAdults,
+        totals.totalKids,
         newRSVP.email,
         newRSVP.name
       );
@@ -38,18 +45,31 @@ exports.createRSVP = async (req, res) => {
 exports.getRSVPList = async (req, res) => {
   try {
     const rsvps = await RSVP.find().sort({ createdAt: -1 }).lean();
+
     const totalRSVPs = rsvps.length;
-    const totalGuests = rsvps.reduce(
-      (sum, rsvp) => sum + (rsvp.guests || 0),
-      0
+
+    const totals = rsvps.reduce(
+      (acc, rsvp) => {
+        if (rsvp.attendance === "yes") {
+          acc.totalAdults += Number(rsvp.adults || 0);
+          acc.totalKids += Number(rsvp.kids || 0);
+        }
+        return acc;
+      },
+      { totalAdults: 0, totalKids: 0 }
     );
+
+    const totalGuests = totals.totalAdults + totals.totalKids;
 
     res.render("admin", {
       totalRSVPs,
+      totalAdults: totals.totalAdults,
+      totalKids: totals.totalKids,
       totalGuests,
       rsvps,
     });
   } catch (err) {
+    console.error(err);
     res.status(500).send("Error loading dashboard");
   }
 };

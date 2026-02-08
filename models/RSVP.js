@@ -2,10 +2,42 @@ const mongoose = require("mongoose");
 
 const rsvpSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
-    email: { type: String, required: true },
-    attendance: { type: String, enum: ["yes", "no"], required: true },
-    guests: { type: Number, default: 0 },
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    email: {
+      type: String,
+      required: true,
+      lowercase: true,
+      trim: true,
+    },
+
+    attendance: {
+      type: String,
+      enum: ["yes", "no"],
+      required: true,
+    },
+
+    adults: {
+      type: Number,
+      min: 0,
+      default: 0,
+      required: function () {
+        return this.attendance === "yes";
+      },
+    },
+
+    kids: {
+      type: Number,
+      min: 0,
+      default: 0,
+      required: function () {
+        return this.attendance === "yes";
+      },
+    },
   },
   { timestamps: true }
 );

@@ -3,121 +3,146 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vrishti</title>
+  <title>Update Baby Shower RSVP</title>
+
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
   <style>
-    @media (max-width: 393px) {
-      .gap-2 {
-        gap: 0.25rem;
-        font-size: 9px;
-      }
-     
+    body { font-family: 'Roboto', sans-serif; }
+
+    .animate-fadeIn {
+      animation: fadeIn 1s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px);}
+      to { opacity: 1; transform: translateY(0);}
     }
   </style>
 </head>
-<body class="bg-gray-100 text-gray-800 font-sans">
 
-  <div class="min-h-screen flex flex-col md:flex-row">
+<body class="bg-pink-50 text-gray-800">
 
-   <!-- Left: Background Image Section -->
-<div class="relative md:w-1/2 w-full h-64 md:h-auto bg-cover bg-center" style="background-image: url('/assets/images/rsvp_bg.jpeg');">
-  <!-- Overlay -->
-  <div class="absolute inset-0 bg-black/40 flex flex-col items-center justify-center px-4 text-center">
-    <h1 class="text-white text-3xl md:text-5xl font-bold mb-4">શ્રી સત્યનારાયણની કથા</h1>
+<!-- Main Content -->
+<div class="min-h-screen flex flex-col md:flex-row">
 
-    <!-- Map Icon Button -->
-    {{!-- <a href="https://g.co/kgs/V5azqcv" target="_blank" class="mt-2 text-white hover:text-yellow-300 transition duration-200">
-      <!-- You can use an emoji or SVG icon -->
-     <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 0 24" stroke="currentColor">
-  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9.75L12 3l9 6.75M4.5 10.5v9.75h5.25V15h4.5v5.25H19.5V10.5" />
-</svg>
-      <p class="text-1xl mt-1" style="align: left;"></p>
-    </a> --}}
-  </div>
-</div>
-
-
-    <!-- Right: RSVP Section -->
-    <div class="md:w-1/2 w-full flex flex-col justify-center items-center px-6 py-10">
-      <div class="max-w-md w-full bg-white shadow-xl rounded-2xl p-8">
-        <h2 class="text-2xl font-semibold mb-2 text-center">Update your RSVP</h2>
-        <p class="text-center text-lg mb-4">Join us for a special celebration 🎉</p>
-        <div class="text-sm text-center mb-6">
-  <p class="flex items-center justify-center gap-2">
-    <strong>Date:</strong> August 10, 2025
-  </p>
-  <p class="flex items-center justify-center gap-2">
-    <strong>Time:</strong> 3:00 PM
-  </p>
-   <p class="flex items-center justify-center gap-2">
-    <strong>Address:</strong> 425 Porte Rd, Ajax, ON, L1S 0E4
-  </p>
-
-  <!-- Location Icon + Link -->
-  <a href="https://g.co/kgs/V5azqcv" target="_blank" class="flex items-center justify-center gap-2 text-blue-600 hover:underline mt-2">
-    <!-- Home Icon -->
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9.75L12 3l9 6.75M4.5 10.5v9.75h5.25V15h4.5v5.25H19.5V10.5" />
-    </svg>
-    <span>View Location</span>
-  </a>
-</div>
-
-<div id="godModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
-  <div class="bg-white rounded-2xl shadow-xl p-6 text-center max-w-sm w-full animate-pulse">
-    <img src="/assets/images/vishnubhagvaan.jpg" alt="Satyanarayan" class="w-24 mx-auto mb-4" />
-    <h2 class="text-xl font-semibold text-purple-700">Sending your RSVP...</h2>
-    <p class="text-gray-600 mt-2">Seeking blessings from Satyanarayan Bhagwan 🙏</p>
-  </div>
-</div>
-
-        <!-- RSVP Form -->
-        <form id="rsvpForm" class="space-y-4" method="post" action="/api/rsvp/updatersvpRecord">
-          <input type="text" name="name" placeholder="Your Full Name" value="{{name}}" readonly class="w-full px-4 py-2 border rounded-xl" />
-          <input type="email" name="email" placeholder="Email Address" value="{{email}}" readonly class="w-full px-4 py-2 border rounded-xl" />
-          <select name="attendance" required class="w-full px-4 py-2 border rounded-xl">
-            <option value="">Will you attend?</option>
-            <option value="yes">Yes, I’ll be there</option>
-            <option value="no">Sorry, I can’t make it</option>
-          </select>
-          <input type="number" name="guests" placeholder="Number of Guests" min="0" class="w-full px-4 py-2 border rounded-xl" />
-          <button type="submit" class="w-full bg-purple-600 text-white font-semibold py-2 rounded-xl hover:bg-purple-700 transition">Update RSVP</button>
-        </form>
-        
-        {{!-- <p id="confirmationMsg" class="mt-4 text-green-600 font-medium hidden text-center">Thank you for your RSVP! 🎉</p> --}}
-        <p id="confirmationMsg" class="mt-4 text-green-600 font-medium text-center"></p>
-
-      </div>
-
-      <!-- Footer -->
-      <footer class="text-center text-sm text-gray-600 mt-6">
-        <h3 style="background-color: rgb(222, 60, 60);color:white;padding:10px;border-radius:10px">We expect your RSVP Before 25th July 2025</h3>
-      </footer>
+  <!-- Left Image -->
+  <div class="relative md:w-1/2 w-full h-64 md:h-auto bg-cover bg-center"
+       style="background-image: url('/assets/images/radhakrishna.jpg');">
+    <div class="absolute inset-0 bg-black/30 flex items-center justify-center text-center">
+      <h1 class="text-white text-4xl font-bold">Update Your RSVP 🎀</h1>
     </div>
   </div>
 
- <script>
-          const params = new URLSearchParams(window.location.search);
-          const msg = params.get("msg");
-          if (msg) {
-            if(msg=='You have already Registered 😕 Use another Email'){
-                  const coloredText = '<span style="color: rgb(222, 60, 60);">You have already Registered 😕 Use another Email.</span>';
-                  document.getElementById("confirmationMsg").innerHTML = coloredText;
+  <!-- Right Section -->
+  <div class="md:w-1/2 w-full flex flex-col justify-center items-center px-6 py-10"
+       style="background-image: url('/assets/images/bg.jpg');">
 
-            }else{
-                            document.getElementById("confirmationMsg").innerHTML = msg;
+    <div class="max-w-md w-full bg-white shadow-2xl rounded-3xl p-8 animate-fadeIn">
 
-            }
-          }
+      <h2 class="text-2xl font-semibold mb-2 text-center text-pink-600">
+        Update Your Baby Shower RSVP
+      </h2>
 
-  const rsvpForm = document.getElementById("rsvpForm");
-  const modal = document.getElementById("godModal");
+      <p class="text-center text-lg mb-4 text-gray-700">
+        We’re excited to celebrate with you 👶
+      </p>
 
-  rsvpForm.addEventListener("submit", function (e) {
-    // Show spiritual modal
-    modal.classList.remove("hidden");
+      <!-- Event Info -->
+      <div class="text-sm text-center mb-6 space-y-2">
+        <p><strong>Date:</strong> March 8, 2026</p>
+        <p><strong>Time:</strong> 9:30 AM onwards</p>
+        <p><strong>Address:</strong> H.M.S. Banquet Hall, Ajax, ON</p>
 
-  });
-  </script> 
+        <a href="https://www.google.com/maps/place/H.M.S.+Banquet+Hall"
+           target="_blank"
+           class="inline-flex items-center gap-2 text-blue-600 hover:underline">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+               fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M3 9.75L12 3l9 6.75M4.5 10.5v9.75h5.25V15h4.5v5.25H19.5V10.5"/>
+          </svg>
+          View Location
+        </a>
+      </div>
+
+      <!-- Update RSVP Form -->
+      <form id="rsvpForm"
+            method="post"
+            action="/api/rsvp/updatersvpRecord"
+            class="space-y-4">
+
+        <input type="text"
+               name="name"
+               value="{{name}}"
+               readonly
+               class="w-full px-4 py-2 border rounded-xl bg-gray-100">
+
+        <input type="email"
+               name="email"
+               value="{{email}}"
+               readonly
+               class="w-full px-4 py-2 border rounded-xl bg-gray-100">
+
+        <select name="attendance"
+                class="w-full px-4 py-2 border rounded-xl">
+          <option value="">Will you attend?</option>
+          <option value="yes" {{#if attendance}}selected{{/if}}>
+            Yes, I’ll attend
+          </option>
+          <option value="no" {{#if attendance}}selected{{/if}}>
+            Sorry, I can’t make it
+          </option>
+        </select>
+
+        <div class="flex gap-2">
+          <input type="number"
+                 name="adults"
+                 min="0"
+                 value="{{adults}}"
+                 placeholder="Adults"
+                 class="w-1/2 px-4 py-2 border rounded-xl">
+
+          <input type="number"
+                 name="kids"
+                 min="0"
+                 value="{{kids}}"
+                 placeholder="Kids"
+                 class="w-1/2 px-4 py-2 border rounded-xl">
+        </div>
+
+        <button type="submit"
+                class="w-full bg-pink-600 text-white font-semibold py-2 rounded-xl hover:bg-pink-700 transition">
+          Update RSVP
+        </button>
+      </form>
+
+      <p id="confirmationMsg"
+         class="mt-4 text-green-600 font-medium text-center"></p>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center text-sm text-gray-600 mt-6">
+      <h3 class="bg-pink-500 text-white px-4 py-2 rounded-xl">
+        Please Update Before February 15, 2026
+      </h3>
+    </footer>
+
+  </div>
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const msg = params.get("msg");
+  if (msg) {
+    document.getElementById("confirmationMsg").innerText = msg;
+  }
+</script>
+
 </body>
 </html>
