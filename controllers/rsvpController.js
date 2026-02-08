@@ -17,9 +17,6 @@ exports.createRSVP = async (req, res) => {
     const newRSVP = new RSVP(req.body);
     await newRSVP.save();
 
-    // 2️⃣ Redirect IMMEDIATELY ⚡
-    res.redirect(`/?msg=Thank you for your RSVP! 🎉`);
-
     // 3️⃣ Send email in background (no await)
     (async () => {
       try {
@@ -47,6 +44,9 @@ exports.createRSVP = async (req, res) => {
         console.error("Email failed:", e);
       }
     })();
+
+    // 2️⃣ Redirect IMMEDIATELY ⚡
+    res.redirect(`/?msg=Thank you for your RSVP! 🎉`);
   } catch (err) {
     console.error(err);
     res.status(500).json({ err });
